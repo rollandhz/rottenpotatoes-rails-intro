@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
     if(sort=='title')
       @movies =Movie.order('title ASC')
       @tHighlighted = 'hilite'
-    elsif(sort = 'release_date')
+    elsif(sort == 'release_date')
       @movies = Movie.order('release_date ASC')
       @rHighlighted = 'hilite'
     else
