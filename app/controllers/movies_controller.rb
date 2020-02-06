@@ -14,9 +14,12 @@ class MoviesController < ApplicationController
      @all_ratings = Movie.all_ratings
      
     rating = params[:ratings]
+    
     if(rating)
       @movies = Movie.where(rating: rating.keys)
     end
+    
+    
     
     sort = params[:sort] 
     if(sort=='title')
@@ -33,6 +36,8 @@ class MoviesController < ApplicationController
       end
        
     end
+    
+   
    
     
   end
