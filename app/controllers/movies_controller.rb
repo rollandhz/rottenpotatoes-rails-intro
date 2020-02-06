@@ -11,33 +11,50 @@ class MoviesController < ApplicationController
   end
 
   def index
+  
      @all_ratings = Movie.all_ratings
      
     rating = params[:ratings]
     
+    
     if(rating)
       @movies = Movie.where(rating: rating.keys)
+      session[:rating] =rating
+    elsif(session[:rating])
+      rating = session[:rating]
+      @movies = Movie.where(rating: session[:rating].keys)
+    else
+      @movies =Movie.all
     end
     
     
     
-    sort = params[:sort] 
+    sort = params[:sort]
+    
     if(sort=='title')
       @movies =Movie.order('title ASC')
       @tHighlighted = 'hilite'
+      session[:sort] =sort
     elsif(sort == 'release_date')
       @movies = Movie.order('release_date ASC')
       @rHighlighted = 'hilite'
+      session[:sort] =sort
+    elsif(rating)
+      @movies = Movie.where(rating: rating.keys)
+    elsif(session[:sort]=='title')
+      sort = session[:sort]
+      @movies = Movie.all.order(session[:sort])
+      @tHighlighted = 'hilite'
+    elsif(session[:sort]=='title')
+      sort = session[:sort]
+      @movies = Movie.all.order(session[:sort])
+      @rHighlighted = 'hilite'
     else
-      if(rating)
-        @movies = Movie.where(rating: rating.keys)
-      else
         @movies = Movie.all
-      end
-       
     end
     
-   
+    session[:ratings] =rating
+    session[:sort] = sort
    
     
   end
